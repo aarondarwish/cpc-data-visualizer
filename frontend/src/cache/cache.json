@@ -1,0 +1,59 @@
+{
+  "data": [
+    {
+      "campaign_id": "6197267442397",
+      "campaign_name": "EUR - 18+ - Analytics - Fredi",
+      "impressions": "16139",
+      "date_start": "2021-01-01",
+      "date_stop": "2022-01-01"
+    },
+    {
+      "campaign_id": "6217419279997",
+      "campaign_name": "Analytics Pulse - Shopify Research",
+      "impressions": "51559",
+      "date_start": "2021-01-01",
+      "date_stop": "2022-01-01"
+    },
+    {
+      "campaign_id": "6220014638597",
+      "campaign_name": "Analytics Pulse - Shopify Demos",
+      "impressions": "95091",
+      "date_start": "2021-01-01",
+      "date_stop": "2022-01-01"
+    },
+    {
+      "campaign_id": "6220480360397",
+      "campaign_name": "analytics Pulse - Shopify Survey",
+      "impressions": "19288",
+      "date_start": "2021-01-01",
+      "date_stop": "2022-01-01"
+    },
+    {
+      "campaign_id": "6222889988997",
+      "campaign_name": "Analytics Pulse – Shopify Guide",
+      "impressions": "29118",
+      "date_start": "2021-01-01",
+      "date_stop": "2022-01-01"
+    },
+    {
+      "campaign_id": "6228371383197",
+      "campaign_name": "Causalytics Generic Retargeting",
+      "impressions": "8235",
+      "date_start": "2021-01-01",
+      "date_stop": "2022-01-01"
+    },
+    {
+      "campaign_id": "6236644686397",
+      "campaign_name": "Causalytics - ABM Agencies - Targeted Ads",
+      "impressions": "59986",
+      "date_start": "2021-01-01",
+      "date_stop": "2022-01-01"
+    }
+  ],
+  "paging": {
+    "cursors": {
+      "before": "MAZDZD",
+      "after": "NgZDZD"
+    }
+  }
+}

@@ -1,0 +1,321 @@
+openapi: 3.0.0
+info:
+  title: Data Analytics API that connects to the Redis OM
+  description: >
+    FB's API data gets stored in a Redis database. In ready-state to be fetched by the Vue
+    frontend to visualize the data.
+  version: 1.0.06
+
+paths:
+  /campaign:
+    put:
+      tags:
+        - campaign
+      description: Creates a new campaign with the specified attributes
+      summary: Create campaign
+      operationId: createCampaign
+      requestBody:
+        description: campaign
+        required: true
+        content:
+          application/json:
+            schema:
+              title: campaign
+              allOf:
+                - $ref: "#/components/schemas/campaign"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/entity_id"
+                  - $ref: "#/components/schemas/campaign"
+
+  /campaign/{id}:
+    get:
+      tags:
+        - campaign
+      description: Gets a specific campaign by ID
+      summary: Get campaign
+      operationId: fetchCampaign
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/entity_id"
+                  - $ref: "#/components/schemas/campaign"
+    post:
+      tags:
+        - campaign
+      description: Updates a specific campaign
+      summary: Update campaign
+      operationId: updateCampaign
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        description: campaign
+        required: true
+        content:
+          application/json:
+            schema:
+              title: campaign
+              allOf:
+                - $ref: "#/components/schemas/campaign"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/entity_id"
+                  - $ref: "#/components/schemas/campaign"
+    delete:
+      tags: 
+         - campaign
+      description: Deletes the campaign by ID
+      summary: Delete campaign
+      operationId: removeCampaign
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/entity_id"
+
+  /campaigns/all:
+    get:
+      tags:
+        - Search
+      description: Gets all the campaigns
+      summary: Get all campaigns
+      operationId: fetchAllCampaigns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/campaigns"
+
+  /campaigns/by-date_start/{date_start}:
+    get:
+      tags:
+        - Search
+      description: Gets campaigns by last name
+      summary: Get campaigns by last name
+      operationId: fetchCampaignsBydate_start
+      parameters:
+        - $ref: "#/components/parameters/date_start"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/campaigns"
+
+  /campaigns/by-date_stop/{date_stop}:
+    get:
+      tags:
+        - Search
+      description: Gets campaigns by last name
+      summary: Get campaigns by last name
+      operationId: fetchCampaignsBydate_stop
+      parameters:
+        - $ref: "#/components/parameters/date_stop"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/campaigns"
+
+
+  /campaigns/impressions-above:
+    get:
+      tags:
+        - Search
+      description: Gets campaigns that are greater in value than the specified attribute
+      summary: Get campaigns beyond a specific impressions setpoint
+      operationId: fetchCampaginsAbove
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/campaigns"
+
+  /campaigns/non-ongoing:
+    get:
+      tags:
+        - Search
+      description: Gets campaigns that are *not* ongoing
+      summary: Get non-ongoing campaigns
+      operationId: fetchNonOngoingCampaigns
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/campaigns"
+
+  /campaigns/ongoing-above_impressions-date-start/{date_start}:
+    get:
+      tags:
+        - Search
+      description: Gets campaigns that are ongoing, above a certain impressions level, and have a matching date
+      summary: Get oddly specific set of campaigns
+      operationId: fetchOngoingCampaginsBydate_start
+      parameters:
+        - $ref: "#/components/parameters/date_start"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/campaigns"
+
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: The ID of the campaign to interact with
+      schema:
+        $ref: "#/components/schemas/id"
+    date_start:
+      name: date_start
+      in: path
+      required: true
+      description: The last name of the campaign
+      schema:
+        $ref: "#/components/schemas/date_start"
+    date_stop:
+      name: date_stop
+      in: path
+      required: true
+      description: The last name of the campaign
+      schema:
+        $ref: "#/components/schemas/date_stop"
+
+  schemas:
+    entity_id:
+      type: object
+      properties:
+        entityId:
+          $ref: "#/components/schemas/id"
+
+    campaigns:
+      type: array
+      items:
+        $ref: "#/components/schemas/campaign"
+
+    campaign:
+      allOf:
+        - $ref: "#/components/schemas/campaign_campaign_id"
+        - $ref: "#/components/schemas/campaign_campaign_name"
+        - $ref: "#/components/schemas/campaign_impressions"
+        - $ref: "#/components/schemas/campaign_dates"
+        - $ref: "#/components/schemas/campaign_ongoing"
+
+    campaign_dates:
+      allOf:
+        - $ref: "#/components/schemas/campaign_date_start"
+        - $ref: "#/components/schemas/campaign_date_stop"
+
+    campaign_campaign_name:
+      type: object
+      properties:
+        campaign_name:
+          $ref: "#/components/schemas/campaign_name"
+
+    campaign_date_start:
+      type: object
+      properties:
+        date_start:
+          $ref: "#/components/schemas/date_start"
+
+    campaign_date_stop:
+      type: object
+      properties:
+        date_stop:
+          $ref: "#/components/schemas/date_stop"
+
+
+    campaign_impressions:
+      type: object
+      properties:
+        impressions:
+          $ref: "#/components/schemas/impressions"
+
+    campaign_campaign_id:
+      type: object
+      properties:
+        campaign_id:
+          $ref: "#/components/schemas/campaign_id"
+
+    campaign_ongoing:
+      type: object
+      properties:
+        ongoing:
+          $ref: "#/components/schemas/ongoing"
+
+    id:
+      description: The ID of the campaign
+      type: string
+      example: 01FX8N39YVZRCQNAW0R5T53H5T
+
+    campaign_name:
+      description: The given name of the campaign
+      type: string
+      example: "EUR - 18+ - Analytics - Fredi"
+      
+    date_start:
+      description: The start date of the campaign
+      type: string
+      example: "2021-01-01"
+
+    date_stop:
+      description: The stop date of the campaign
+      type: string
+      example: "2022-02-01"
+
+    impressions:
+      description: The impressions of the campaign
+      type: integer
+      format: int32
+      example: 7615 
+
+    campaign_id:
+      description: The campaign id given by Facebook's API
+      type: integer
+      format: int32
+      example: 6197267442397
+
+    ongoing:
+      description: If the campaign has been ongoing
+      type: boolean
+      example: true 
